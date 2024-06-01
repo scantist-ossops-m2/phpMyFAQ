@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * phpMyFAQ public routes
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public License,
+ * v. 2.0. If a copy of the MPL was not distributed with this file, You can
+ * obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * @package   phpMyFAQ
+ * @author    Thorsten Rinne <thorsten@phpmyfaq.de>
+ * @copyright 2024 phpMyFAQ Team
+ * @license   https://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
+ * @link      https://www.phpmyfaq.de
+ * @since     2024-05-31
+ */
+
+use phpMyFAQ\Controller\Frontend\SetupController;
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
+
+$routes = new RouteCollection();
+
+$routeDefinitions = [
+    // Setup and update
+    'public.setup.index'   => ['/', SetupController::class, 'index'],
+    'public.setup.install' => ['/install', SetupController::class, 'install'],
+    'public.setup.update'  => ['/update', SetupController::class, 'update'],
+];
+
+foreach ($routeDefinitions as $name => [$path, $controller, $action]) {
+    $routes->add($name, new Route($path, ['_controller' => [$controller, $action]]));
+}
+
+return $routes;
